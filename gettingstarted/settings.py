@@ -32,12 +32,21 @@ DEBUG = True
 
 INSTALLED_APPS = (
     'django.contrib.admin',
+    'django.contrib.sites',
+    'registration', #should be immediately above 'django.contrib.auth'
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello'
+    # 3rd party
+    'crispy_forms',
+    'multiselectfield',
+    #my apps
+    'hello',
+    'listener',
+    'predictor',
+    # 'multiselectfield',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,7 +65,8 @@ ROOT_URLCONF = 'gettingstarted.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
@@ -106,9 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
-USE_I18N = True
+USE_I18N = True #internationalisation, translation
 USE_L10N = True
 USE_TZ = True
+
+
 
 
 # Update database configuration with $DATABASE_URL.
@@ -136,3 +148,42 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = STATIC_ROOT = os.path.join(PROJECT_ROOT, 'mediafiles')
+
+DEFAULT_INDEX_TABLESPACE = ''
+
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+
+
+# Twitter credentials
+TWITTER_CREDENTIALS = {}
+TWITTER_CREDENTIALS['ckey'] = "lrP9f7qOUMTgyokBIRhYClP7o"
+TWITTER_CREDENTIALS['csecret'] = "TAhq4opPrvags8A3mkT6u0u0VX2au6kb1Gx07erTgPZTOkkTzE"
+TWITTER_CREDENTIALS['atoken'] = "124275812-ST7sSfupaPLCNrbg5045c5roEjSTUKl7WbmyCafw"
+TWITTER_CREDENTIALS['asecret'] = "bRfqKHOY88VXz1V2auFL5hQLm5PCI7bGINSaMAmNhHjaa"
+
+
+# crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'advocate.trust@gmail.com'
+EMAIL_HOST_PASSWORD = 'trust-advocate'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#DJANGO REGISTRATION REDUX SETTINGS
+REGISTRATION_DEFAULT_FROM_EMAIL = 'advocate.trust@gmail.com'
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
