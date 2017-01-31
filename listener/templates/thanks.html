@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load staticfiles %}
 
 {% block content %}
@@ -16,11 +16,7 @@
                Thank you
             </p>
         </div>
-        <form action="" method="post"> {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="next" class="btn btn-primary"/>
-            <input type="submit" value="finish" class="btn btn-success"/>
-        </form>
+
 
         </ul>
     </div>

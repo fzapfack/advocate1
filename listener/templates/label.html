@@ -22,33 +22,40 @@
     </div>
 </div>
 
-<div class="container col-md-12">
-    <h2 class="text-center">Quel est le sentiment du tweet suivant:</h2>
-    <br /><br />
-    <div class="col-md-6 text-center col-md-offset-3">
-        <p style="font-size:1.6em">
-            <i class="fa fa-quote-left" aria-hidden="true"></i>
-            {{ tweet }}
-            <i class="fa fa-quote-right" aria-hidden="true"></i>
-        </p>
-        <br />
-        <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
+{% if tweet %}
+    <div class="container col-md-12">
+        <h2 class="text-center">Quel est le sentiment du tweet suivant:</h2>
         <br /><br />
-        <p style="font-size:1.3em">
-            <i class="fa fa-quote-left" aria-hidden="true"></i>
-            {{ retweet }}
-            <i class="fa fa-quote-right" aria-hidden="true"></i>
-        </p>
-        <br />
+        <div class="col-md-6 text-center col-md-offset-3">
+            <p style="font-size:1.6em">
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                {{ tweet }}
+                <i class="fa fa-quote-right" aria-hidden="true"></i>
+            </p>
+            <br />
+            <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
+            <br /><br />
+            <p style="font-size:1.3em">
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                {{ retweet }}
+                <i class="fa fa-quote-right" aria-hidden="true"></i>
+            </p>
+            <br />
 
-        <form class="form-horizontal" action="" method="post"> {% csrf_token %}
-            <div class="col-xs-4 text-center col-xs-offset-4">
-                {{ form|crispy }}
-                <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
-{#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
-            </div>
-        </form>
+            <form class="form-horizontal" action="" method="post"> {% csrf_token %}
+                <div class="col-xs-4 text-center col-xs-offset-4">
+                    {{ form|crispy }}
+                    <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
+    {#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+{% else %}
+    <div class="col-md-6 text-center col-md-offset-3">
+        <h2 class="text-center"> Aucun tweet récent à labeliser.
+            Pouvez vous réessayer plus tard svp (genre dans 5 min)</h2>
+    </div>
+{% endif %}
 
 {% endblock %}

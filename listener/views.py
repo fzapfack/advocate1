@@ -8,7 +8,11 @@ from .models import Tweet as TweetModel
 
 
 def get_name(request):
-    tweet = TweetModel.objects.filter(sentiment_label=None).first()
+    non_labelled = TweetModel.objects.filter(sentiment_label=None)
+    if non_labelled is None or len(non_labelled) < 2:
+        tweet = TweetModel()
+    else:
+        tweet = non_labelled.last()
     if request.method == 'POST':
         form = TweetForm(request.POST, instance=tweet)
         if form.is_valid():
