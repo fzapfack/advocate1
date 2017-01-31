@@ -155,8 +155,10 @@ DEFAULT_INDEX_TABLESPACE = ''
 
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+BROKER_URL = 'redis://h:p11b5d16752910cb350d36ec56be298f158bb0be519ffa64918ac786130fecf8d@ec2-34-198-124-158.compute-1.amazonaws.com:14219'
+CELERY_RESULT_BACKEND = 'redis://h:p11b5d16752910cb350d36ec56be298f158bb0be519ffa64918ac786130fecf8d@ec2-34-198-124-158.compute-1.amazonaws.com:14219'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
