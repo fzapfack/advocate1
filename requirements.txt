@@ -12,6 +12,7 @@ gunicorn==19.6.0
 kombu==4.0.2
 oauthlib==2.0.1
 packaging==16.8
+psycopg2==2.6.1
 pyparsing==2.1.10
 pytz==2016.10
 redis==2.10.5
