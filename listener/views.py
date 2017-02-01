@@ -9,7 +9,7 @@ from .models import Tweet as TweetModel
 
 def get_name(request):
     non_labelled = TweetModel.objects.filter(sentiment_label=None)
-    if non_labelled is None or len(non_labelled) < 2:
+    if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
         tweet = non_labelled.last()

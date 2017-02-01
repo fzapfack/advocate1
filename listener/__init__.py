@@ -1,0 +1,1 @@
+from gettingstarted.worker import app as celery_app
