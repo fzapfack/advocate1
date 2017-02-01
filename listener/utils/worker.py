@@ -20,9 +20,9 @@ class Listener(StreamListener):
         user_lang = decoded['user']['lang']
         replied_to = decoded['in_reply_to_status_id']
         if replied_to is None:
-            replied_to = 0
+            replied_to = '0'
         else:
-            replied_to = int(replied_to)
+            replied_to = str(replied_to)
         lang = decoded['lang']
         if lang is None:
             if user_lang is None:
@@ -36,9 +36,9 @@ class Listener(StreamListener):
         txt = str(decoded['text'])
         user_id = decoded['user']['id']
         if user_id is None:
-            user_id = -1
+            user_id = '-1'
         else:
-            user_id = int(user_id)
+            user_id = str(user_id)
         coord = decoded['coordinates']
         if coord is not None and coord["type"]=="Point":
             coordinates = ', '.join(coord['coordinates'])
