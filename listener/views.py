@@ -36,7 +36,7 @@ def get_name(request):
 
 
 def add_tweet_view(request):
-    print('enter view')
-    add_tweet.delay('totot')
+    print('Enter add_tweet_view')
+    add_tweet.delay('Enter add_tweet')
     return HttpResponse('Tweet added')
 # Create your views here.

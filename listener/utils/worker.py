@@ -5,6 +5,8 @@ import json
 from django.conf import settings
 from listener.models import Tweet
 from geopy.geocoders import Nominatim
+from time import gmtime, strftime
+import time
 
 class Listener(StreamListener):
 
@@ -78,6 +80,11 @@ class Twitter_stream():
 
 
 def start_listening(keywords):
-    stream = Twitter_stream(settings.TWITTER_CREDENTIALS)
-    stream.authentificate()
-    stream.start_stream(keywords)
+    # stream = Twitter_stream(settings.TWITTER_CREDENTIALS)
+    # stream.authentificate()
+    # stream.start_stream(keywords)
+
+    while True:
+        print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+        print('work')
+        time.sleep(10)

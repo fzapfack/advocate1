@@ -9,7 +9,7 @@ logger = get_task_logger(__name__)
 # @celery_app.task
 # @task(name="send_feedback_email_task")
 @shared_task
-def add_tweet(a):
-    print(a)
+def add_tweet(msg):
+    print(msg)
     start_listening(['#macron'])
 
