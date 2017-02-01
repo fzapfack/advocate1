@@ -21,21 +21,25 @@ class Listener(StreamListener):
         replied_to = decoded['in_reply_to_status_id']
         if replied_to is None:
             replied_to = 0
+        else:
+            replied_to = int(replied_to)
         lang = decoded['lang']
         if lang is None:
             if user_lang is None:
                 lang = 'NULL'
             else:
-                lang = user_lang
+                lang = str(user_lang)
         place = decoded['place']
         if place is None:
-            place = 'NULL'
+            place = str('NULL')
 
-        txt = decoded['text']
+        txt = str(decoded['text'])
         user_id = decoded['user']['id']
         if user_id is None:
             user_id = -1
-        coord = decoded['coordinates']
+        else:
+            user_id = int(user_id)
+        coord = str(decoded['coordinates'])
         if coord is not None and coord["type"]=="Point":
             coordinates = ', '.join(coord['coordinates'])
             geolocator = Nominatim()
@@ -44,7 +48,7 @@ class Listener(StreamListener):
             coordinates = ''
         retweet = None
         if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
-            retweet = decoded['retweeted_status']['text']
+            retweet = str(decoded['retweeted_status']['text'])
 
         d = {}
         d['txt'] = txt
@@ -54,7 +58,7 @@ class Listener(StreamListener):
         d['replied_to'] = replied_to
         d['place'] = place
         d['coordinates'] = str(decoded['coordinates'])
-        d['usr_place'] = decoded['user']['location']
+        d['usr_place'] = str(decoded['user']['location'])
         d['retweet'] = retweet
         _ = Tweet.objects.create_tweet(d)
         return(True)
