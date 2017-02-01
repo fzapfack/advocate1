@@ -52,12 +52,12 @@ class Listener(StreamListener):
 
         d = {}
         d['txt'] = txt
-        d['usr_twitter_id'] = user_id
-        d['replied_to'] = replied_to
+        # d['usr_twitter_id'] = user_id
+        # d['replied_to'] = replied_to
         d['lang'] = lang
-        d['replied_to'] = replied_to
-        d['place'] = place
-        d['coordinates'] = str(decoded['coordinates'])
+        # d['replied_to'] = replied_to
+        # d['place'] = place
+        # d['coordinates'] = str(decoded['coordinates'])
         d['usr_place'] = str(decoded['user']['location'])
         d['retweet'] = retweet
         _ = Tweet.objects.create_tweet(d)
