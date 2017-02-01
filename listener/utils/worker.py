@@ -39,7 +39,7 @@ class Listener(StreamListener):
             user_id = -1
         else:
             user_id = int(user_id)
-        coord = str(decoded['coordinates'])
+        coord = decoded['coordinates']
         if coord is not None and coord["type"]=="Point":
             coordinates = ', '.join(coord['coordinates'])
             geolocator = Nominatim()
