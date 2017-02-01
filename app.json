@@ -1,8 +1,8 @@
 {
-  "name": "Start on Heroku: Python",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "name": "Advocate - twitter listener",
+  "description": "An app that perfoms realtime sentiments analysis of french tweets.",
   "image": "heroku/python",
   "repository": "https://github.com/heroku/python-getting-started",
   "keywords": ["python", "django" ],
-  "addons": [ "heroku-postgresql" ]
+  "addons": [ "heroku-postgresql" ,"heroku-redis" ]
 }
