@@ -80,11 +80,11 @@ class Twitter_stream():
 
 
 def start_listening(keywords):
-    # stream = Twitter_stream(settings.TWITTER_CREDENTIALS)
-    # stream.authentificate()
-    # stream.start_stream(keywords)
+    stream = Twitter_stream(settings.TWITTER_CREDENTIALS)
+    stream.authentificate()
+    stream.start_stream(keywords)
 
-    while True:
-        print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-        print('work')
-        time.sleep(10)
+    # while True:
+    #     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+    #     print('work')
+    #     time.sleep(10)
