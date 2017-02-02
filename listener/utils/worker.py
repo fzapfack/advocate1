@@ -5,8 +5,8 @@ import json
 from django.conf import settings
 from listener.models import Tweet
 from geopy.geocoders import Nominatim
-from time import gmtime, strftime
-import time
+# from time import gmtime, strftime
+# import time
 
 class Listener(StreamListener):
 
@@ -57,7 +57,7 @@ class Listener(StreamListener):
         d['lang'] = lang
         # d['replied_to'] = replied_to
         # d['place'] = place
-        # d['coordinates'] = str(decoded['coordinates'])
+        d['coordinates'] = str(decoded['coordinates'])
         d['usr_place'] = str(decoded['user']['location'])
         d['retweet'] = retweet
         _ = Tweet.objects.create_tweet(d)

@@ -4,7 +4,7 @@ from .models import Tweet
 from .forms import TweetForm
 
 class TweetAdmin(admin.ModelAdmin):
-    list_display = ["updated","usr_place","retweet","lang"]
+    list_display = ["txt","usr_place","created","lang"]
     # fields = ['sentiment_label']
     # form = TweetForm
     class Meta:

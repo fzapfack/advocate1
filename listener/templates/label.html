@@ -22,40 +22,57 @@
     </div>
 </div>
 
-{% if tweet %}
-    <div class="container col-md-12">
-        <h2 class="text-center">Quel est le sentiment du tweet suivant:</h2>
-        <br /><br />
-        <div class="col-md-6 text-center col-md-offset-3">
-            <p style="font-size:1.6em">
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-                {{ tweet }}
-                <i class="fa fa-quote-right" aria-hidden="true"></i>
-            </p>
-            <br />
-            <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
-            <br /><br />
-            <p style="font-size:1.3em">
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-                {{ retweet }}
-                <i class="fa fa-quote-right" aria-hidden="true"></i>
-            </p>
-            <br />
+<div class="container col-md-6 col-md-offset-3">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <i class="fa fa-long-arrow-right fa-fw"></i>
+            <strong> Quel est le sentiment du tweet suivant:  </strong>
+            <span class="text-right">
+                (<strong>{{ num_labels }} </strong><i class="fa fa-arrow-circle-right"> tweets déjà labelisés)</i>
+            </span>
+        </h3>
 
-            <form class="form-horizontal" action="" method="post"> {% csrf_token %}
-                <div class="col-xs-4 text-center col-xs-offset-4">
-                    {{ form|crispy }}
-                    <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
-    {#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
+
+    </div>
+    <div class="panel-body">
+        {% if tweet %}
+{#                <h2 class="text-center"></h2>#}
+                <br /><br />
+                <div class="col-md-10 text-center col-md-offset-1">
+                    <p style="font-size:1.6em">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        {{ tweet }}
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                    </p>
+                    <br />
+                    <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
+                    <br /><br />
+                    <p style="font-size:1.3em">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        {{ retweet }}
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                    </p>
+                    <br />
+
+                    <form class="form-horizontal" action="" method="post"> {% csrf_token %}
+                        <div class="col-xs-4 text-center col-xs-offset-4">
+                            {{ form|crispy }}
+                            <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
+            {#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
+
+        {% else %}
+            <div class="col-md-10 text-center col-md-offset-1">
+                <h2 class="text-center"> Aucun tweet récent à labeliser.
+                    Pouvez vous réessayer plus tard svp (genre dans 5 min)</h2>
+            </div>
+        {% endif %}
+
     </div>
-{% else %}
-    <div class="col-md-6 text-center col-md-offset-3">
-        <h2 class="text-center"> Aucun tweet récent à labeliser.
-            Pouvez vous réessayer plus tard svp (genre dans 5 min)</h2>
-    </div>
-{% endif %}
+</div>
+</div>
 
 {% endblock %}

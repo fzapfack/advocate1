@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from listener.tasks import add_tweet
+from django.db.models import Q
 
 from .forms import TweetForm
 from .models import Tweet as TweetModel
@@ -9,10 +10,11 @@ from .models import Tweet as TweetModel
 
 def get_name(request):
     non_labelled = TweetModel.objects.filter(sentiment_label=None)
+    num_labels = TweetModel.objects.filter(~Q(sentiment_label=None)).count()
     if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
-        tweet = non_labelled.last()
+        tweet = non_labelled.first()
     if request.method == 'POST':
         form = TweetForm(request.POST, instance=tweet)
         if form.is_valid():
@@ -28,7 +30,8 @@ def get_name(request):
     context = {
         'tweet': tweet.txt,
         'retweet': tweet.retweet,
-        'form': form
+        'form': form,
+        'num_labels': num_labels
     }
     return render(request, 'label.html', context)
 
