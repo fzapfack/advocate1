@@ -8,6 +8,7 @@ admin.autodiscover()
 import hello.views
 from listener.views import add_tweet_view
 from listener.views import get_name
+import predictor.views
 
 
 # Examples:
@@ -17,7 +18,9 @@ from listener.views import get_name
 urlpatterns = [
     url(r'^$', hello.views.index, name='home'),
     url(r'^map', hello.views.map, name='maps'),
-    # url(r'^db', hello.views.db, name='db'),
+    url(r'^db', hello.views.db, name='db'),
+    url(r'^test/$', predictor.views.index, name='test_home'),
+    url(r'^test/(?P<id>\w+)/$', predictor.views.test, name='test_page'),
     url(r'^start_listening', add_tweet_view, name='start_listening'),
     url(r'^labeling', get_name, name='labeling'),
     url(r'^accounts/', include('registration.backends.default.urls')),

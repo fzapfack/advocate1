@@ -59,11 +59,14 @@ class Tweet(models.Model):
 
     txt = models.TextField(null=False, blank=False,db_tablespace="indexes")
     retweet = models.TextField(null=True, blank=False, db_tablespace="indexes")
-    usr_twitter_id = models.IntegerField(db_tablespace="indexes", null=True)
-    replied_to = models.IntegerField(db_tablespace="indexes", null=True)
-    lang = models.CharField(max_length=10,db_tablespace="indexes",null=True)
-    place = models.CharField(max_length=50, db_tablespace="indexes",null=True)
+    twitter_id = models.CharField(max_length=30, db_tablespace="indexes", null=True)
+    retweet_twitter_id = models.CharField(max_length=30, db_tablespace="indexes", null=True)
+    usr_twitter_id = models.CharField(max_length=30, db_tablespace="indexes", null=True)
     usr_place = models.CharField(max_length=50, db_tablespace="indexes", null=True)
+    lang = models.CharField(max_length=10,db_tablespace="indexes",null=True)
+    # ---
+    place = models.CharField(max_length=50, db_tablespace="indexes",null=True)
+    replied_to = models.CharField(max_length=30, db_tablespace="indexes", null=True)
     coordinates = models.TextField(db_tablespace="indexes",null=True)
 
     def __str__(self):

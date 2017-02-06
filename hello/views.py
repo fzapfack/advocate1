@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import random
 from .models import Greeting
+from listener.models import Tweet as TweetModel
 
 REGIONS_FR = {'Corse': 'FR-H', 'Centre-Val de Loire': 'FR-F', 'Hauts-de-France': 'FR-S', 'Nouvelle-Aquitaine': 'FR-B',
               'Auvergne-Rhône-Alpes': 'FR-V', 'Auvergne-Rhône-Alpes2': 'FR-C', 'Grand-Est': 'FR-G', 'Normandie': 'FR-P', 'Île-de-France': 'FR-J',
@@ -17,6 +18,9 @@ def index(request):
     context['authenticated'] = request.user.is_authenticated()
     if context['authenticated'] == True:
         context['username'] = request.user.username
+        context['num_pos'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['POSITIVE']).count()
+        context['num_neg'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEGATIVE']).count()
+        context['num_net'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEUTRAL']).count()
     return render(request, 'index.html',context)
 
 def map(request):

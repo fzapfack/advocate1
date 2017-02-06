@@ -15,27 +15,54 @@
   </div>
 </div>
 <div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    Cette application est une petite illustration de ce que nous faisons pour nos clients. Visitez notre <a href="http://www.trust-advocate.co/" class="alert-link">site</a> pour plus de détails sur nos offres.
-  </div>
-  <hr>
-  <div class="row ">
-    <div class="">
-      <h3 class="text-center"><span class="glyphicon glyphicon-info-sign "></span> Comment ca marche</h3>
-        Nous avons décidé de vous montrer comment notre technologie peut être utilisée afin d'analyser en temps réel le <b>sentiment</b> de tweets contenant un hashtag en temps réel.
-        En cette période électorale, le hashtag choisi fut: <b> #macron</b>. <br/>
-        En effet l'analyse automatique de tweets en général et de tweets politiques en particulier est une tâche très délicate car les messages sont souvent implicites et le second dégré est fréquemment employé.
-        <br/>
-        Les resultats seront présentés sous la forme d'une carte de la France montrant la popularité d'Emmanuel Macron (voir exemple ci-dessous).
+    <div class="alert alert-info text-center" role="alert">
+        Cette application est une petite illustration de ce que nous faisons pour nos clients. Visitez notre <a href="http://www.trust-advocate.co/" class="alert-link">site</a> pour plus de détails sur nos offres.
     </div>
-    <br />
-  </div> <!-- row -->
-   <div class="alert alert-warning text-center" role="alert">
-    <strong class="alert-link glyphicon glyphicon-alert">  Disclaimer</strong>: Ce travail ne reflète en aucun cas l'opinion politique de l'entreprise ou de ses employés. Le choix du candidat "Emanuel Macron" a été fait purement aléatoirement.
-  </div>
+    <hr>
+    <div class="row ">
+        <div class="">
+            <h3 class="text-center"><span class="glyphicon glyphicon-info-sign "></span> Comment ca marche</h3>
+            Nous avons décidé de vous montrer comment notre technologie peut être utilisée afin d'analyser en temps réel le <b>sentiment</b> de tweets contenant un hashtag en temps réel.
+            En cette période électorale, le hashtag choisi fut: <b> #macron</b>. <br/>
+            En effet l'analyse automatique de tweets en général et de tweets politiques en particulier est une tâche très délicate car les messages sont souvent implicites et le second dégré est fréquemment employé.
+            <br/>
+            Les resultats seront présentés sous la forme d'une carte de la France montrant la popularité d'Emmanuel Macron (voir exemple ci-dessous).
+        </div>
+        <br />
+    </div> <!-- row -->
+    <div class="alert alert-warning text-center" role="alert">
+        <strong class="alert-link glyphicon glyphicon-alert">  Disclaimer</strong>: Ce travail ne reflète en aucun cas l'opinion politique de l'entreprise ou de ses employés. Le choix du candidat "Emanuel Macron" a été fait purement aléatoirement.
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="regions_div"  class="thumbnail pagination-centered text-center center-block" style="width: 570px; height: 360px;">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="donut-labels" ></div>
+        </div>
+
+    </div>
+
+
 </div>
 
-<div class="pagination-centered text-center center-block">
-    <div id="regions_div"  class="thumbnail pagination-centered text-center center-block" style="width: 570px; height: 360px;"></div>
-</div>
+<script>
+    var pos = {{ num_pos }};
+    var neg = {{ num_neg }};
+    var net = {{ num_net }};
+    Morris.Donut({
+        element: 'donut-labels',
+        data: [
+            {label: "Tweets Négatifs", value: pos},
+            {label: "Tweets Neutres", value: neg},
+            {label: "Tweets Positifs", value: net}
+        ],
+        colors:['#e60000', '#ffffce', '#00b300']
+    });
+</script>
+
+
 {% endblock %}
