@@ -45,6 +45,11 @@ def get_name(request):
 
 def add_tweet_view(request):
     print('Enter add_tweet_view')
+    b = [i for i in inspect().active().values()]
+    b = [item for sublist in b for item in sublist]
+    if len(b)>0 and any(['add_tweet' in i['name'] for i in b]):
+        listener.config.WORKER_STARTED=True
+
     if listener.config.WORKER_STARTED:
         print('\ listener worker already started')
         print(inspect().active())
@@ -52,6 +57,5 @@ def add_tweet_view(request):
     else:
         print('Creating celery task')
         add_tweet.delay('Twitter listener starting')
-        listener.config.WORKER_STARTED = True
         return HttpResponse('Twitter listener started')
 # Create your views here.
