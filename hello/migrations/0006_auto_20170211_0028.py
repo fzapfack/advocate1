@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='departementfrmodel',
             name='code',
-            field=models.CharField(max_length=10),
+            field=models.CharField(max_length=10, primary_key=True, serialize=False),
         ),
         migrations.AlterField(
             model_name='villefrmodel',
             name='code',
-            field=models.CharField(max_length=10),
+            field=models.CharField(max_length=10, primary_key=True, serialize=False),
         ),
     ]

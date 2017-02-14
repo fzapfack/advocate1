@@ -20,10 +20,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='departementfrmodel',
             name='region_code',
+            field=models.CharField(max_length=10),
         ),
         migrations.AlterField(
             model_name='regionfrmodel',
             name='code',
+            field=models.CharField(max_length=10, primary_key=True, serialize=False),
         ),
         migrations.AlterField(
             model_name='villefrmodel',
@@ -38,5 +40,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='villefrmodel',
             name='region_code',
+            field=models.CharField(max_length=10),
         ),
     ]

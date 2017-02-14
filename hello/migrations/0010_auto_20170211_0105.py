@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='villefrmodel',
             name='name',
-            field=models.CharField(max_length=60),
+            field=models.CharField(max_length=60, primary_key=True, serialize=False),
         ),
     ]
