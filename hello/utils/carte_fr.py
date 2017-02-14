@@ -217,24 +217,24 @@ class Map:
     def update_regions_color(self):
         if not self.intialized:
             self.initialize()
-        else:
-            res = Region.objects.all()
-            for r in res:
-                num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
-                ind = np.argmax(num_tweets)
-                if r.num_tweets_pos==0 and r.num_tweets_neg==0 and r.num_tweets_net==0:
-                    r.color = Region.COLORS['UNKNOWN']
-                elif ind==0:
-                    r.color = Region.COLORS['POSITIVE']
-                elif ind==1:
-                    r.color = Region.COLORS['NEGATIVE']
-                else:
-                    r.color = Region.COLORS['NEUTRAL']
-                r.save()
+        res = Region.objects.all()
+        for r in res:
+            num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
+            ind = np.argmax(num_tweets)
+            if r.num_tweets_pos==0 and r.num_tweets_neg==0 and r.num_tweets_net==0:
+                r.color = Region.COLORS['UNKNOWN']
+            elif ind==0:
+                r.color = Region.COLORS['POSITIVE']
+            elif ind==1:
+                r.color = Region.COLORS['NEGATIVE']
+            else:
+                r.color = Region.COLORS['NEUTRAL']
+            r.save()
         return True
 
-
     def add_all_tweets(self, labeled_data=True):
+        if not self.intialized:
+            self.initialize()
         if labeled_data:
             res = Tweet.objects.filter(~Q(sentiment_label=None) & Q(added_map=False))
         else:
