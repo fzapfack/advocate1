@@ -134,21 +134,24 @@ class Map:
         return found, res
 
     def extract_region(self, s):
-        res = None
-        if not self.intialized:
-            self.initialize()
-        words = [unidecode(w).lower().strip() for w in s.split(',')]
-        words = [w for w in words if w != 'france' and w != '' and w is not None and w != 'NULL']
-        found = False
-        for func in [self.lookup_region, self.lookup_department, self.lookup_city]:
-            res = func(words)
-            if res[0]:
-                found = True
-                break
-        if found:
-            return res[1][0].name
-        else:
+        if ~bool(s):
             return 'UNKNOWN'
+        else:
+            res = None
+            if not self.intialized:
+                self.initialize()
+            words = [unidecode(w).lower().strip() for w in s.split(',')]
+            words = [w for w in words if w != 'france' and w != '' and w is not None and w != 'NULL']
+            found = False
+            for func in [self.lookup_region, self.lookup_department, self.lookup_city]:
+                res = func(words)
+                if res[0]:
+                    found = True
+                    break
+            if found:
+                return res[1][0].name
+            else:
+                return 'UNKNOWN'
 
     def tweet_region(self, tweet):
         region = tweet.usr_region
