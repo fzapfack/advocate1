@@ -138,7 +138,7 @@ class Map:
         if not self.intialized:
             self.initialize()
         words = [unidecode(w).lower().strip() for w in s.split(',')]
-        words = [w for w in words if w != 'france' and w != '']
+        words = [w for w in words if w != 'france' and w != '' and w is not None and w != 'NULL']
         found = False
         for func in [self.lookup_region, self.lookup_department, self.lookup_city]:
             res = func(words)
