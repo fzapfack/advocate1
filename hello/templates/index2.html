@@ -42,19 +42,18 @@
 
 
     <div class="row">
-        <div class="col-md-7">
-{#            <div id="regions_div"  class="thumbnail pagination-centered text-center center-block" style="width: 570px; height: 360px;">#}
-{#            </div>#}
-            <div id="map" class="thumbnail col-md-8 text-center" style="width: 50em; height: 50em;"></div>
+        <div class="col-md-6">
+            <div id="regions_div"  class="thumbnail pagination-centered text-center center-block" style="width: 570px; height: 360px;">
+            </div>
         </div>
-
-        <div class="col-md-5 text-center">
-            <h4> <u>Répartition des tweets</u></h4>
-            <br />
-            <div id="donut-labels" style="margin-top: 5em;"></div>
+        <div class="col-md-6">
+            <div id="donut-labels" ></div>
         </div>
     </div>
 </div>
+
+</div>
+
 
 
 <script type="text/javascript">
@@ -62,6 +61,9 @@
     var pos = {{ num_pos }};
     var neg = {{ num_neg }};
     var net = {{ num_net }};
+{#    var tmp = {{ data }};#}
+{#    alert(tmp);#}
+
     Morris.Donut({
         element: 'donut-labels',
         data: [
@@ -69,59 +71,13 @@
             {label: "Tweets Neutres", value: neg},
             {label: "Tweets Positifs", value: net}
         ],
-        colors:['#e60000', '#ffff68', '#00b300']
+        colors:['#e60000', '#ffffce', '#00b300']
     });
 </script>
 
 
-{#<div id="map" class="thumbnail container text-center" style="width: 30em; height: 40em;"></div>#}
-<script>
-    var map;
-    function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: {lat: 46.2276, lng: 2.2137}
-    });
-    var data = '{{ geojson|escapejs }}';
-    var data_json = JSON.parse(data);
-    var infowindow = new google.maps.InfoWindow({});
-    map.data.addGeoJson(data_json);
-
-    map.data.setStyle(function(feature) {
-        var color = feature.getProperty('color');
-        return {
-          fillColor: color,
-          strokeWeight: 1
-        };
-    });
-
-
-    // When the user hovers, tempt them to click by outlining the letters.
-  // Call revertStyle() to remove all overrides. This will use the style rules
-  // defined in the function passed to setStyle()
-    map.data.addListener('mouseover', function(event) {
-        map.data.revertStyle();
-        map.data.overrideStyle(event.feature, {strokeWeight: 8});
-        infowindow.setContent(
-                "<h5><u>"+event.feature.getProperty('name')+"</u></h5> " +
-                "<p><b>Tweets positifs:" + event.feature.getProperty('num_pos') + "</p></b>"+
-                "<p><b>Tweets négatifs:" + event.feature.getProperty('num_neg') + "</p></b>"+
-                "<p><b>Tweets neutres:" + event.feature.getProperty('num_net') + "</p></b>");
-        infowindow.setPosition(event.feature.getProperty('position'));
-        infowindow.open(map);
-    });
-
-    map.data.addListener('mouseout', function(event) {
-        map.data.revertStyle();
-        infowindow.close();
-    });
-    }
 
 
 
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBivhEaLebOwZmguQz7RCfSWPYZP0wJ2Ak&signed_in=true&callback=initMap">
-
-    </script>
 
 {% endblock %}

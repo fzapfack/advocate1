@@ -17,8 +17,6 @@ import predictor.views
 
 urlpatterns = [
     url(r'^$', hello.views.index, name='home'),
-    url(r'^map', hello.views.map, name='maps'),
-    url(r'^db', hello.views.db, name='db'),
     url(r'^test/$', predictor.views.index, name='test_home'),
     url(r'^test/(?P<id>\w+)/$', predictor.views.test, name='test_page'),
     url(r'^start_listening', add_tweet_view, name='start_listening'),

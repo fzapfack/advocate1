@@ -147,8 +147,8 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = STATIC_ROOT = os.path.join(PROJECT_ROOT, 'mediafiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'mediafiles')
 
 DEFAULT_INDEX_TABLESPACE = ''
 

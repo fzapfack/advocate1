@@ -4,46 +4,28 @@ from tweepy.streaming import StreamListener
 import json
 from django.conf import settings
 from listener.models import Tweet
-from geopy.geocoders import Nominatim
+from geopy.geocoders import Nominatim # to remove
+
 # from time import gmtime, strftime
 # import time
+
 
 class Listener(StreamListener):
 
     def on_data(self, data): #on_data
-        # decoded['truncated'],
-        # decoded['coordinates'])
-        # decoded['user']['screen_name'],
-        # decoded['user']['name'],
-        # favorite_count number of likes
         decoded = json.loads(data)
         user_lang = decoded['user']['lang']
-        replied_to = decoded['in_reply_to_status_id']
-        if replied_to is None:
-            replied_to = '0'
-        else:
-            replied_to = str(replied_to)
         lang = decoded['lang']
-        if lang is None:
-            if user_lang is None:
+        if ~bool(lang):
+            if ~bool(user_lang):
                 lang = 'NULL'
             else:
-                lang = str(user_lang)
-        place = decoded['place']
-        if place is None:
-            place = str('NULL')
+                lang = user_lang
 
         txt = str(decoded['text'])
         user_id = None
         if 'user' in decoded and decoded['user'] is not None:
             user_id = decoded['user']['id_str']
-        coord = decoded['coordinates']
-        if coord is not None and coord["type"]=="Point":
-            coordinates = ', '.join(coord['coordinates'])
-            geolocator = Nominatim()
-            location = geolocator.reverse(coordinates)
-        else:
-            coordinates = ''
         retweet = None
         retweet_twitter_id = None
         if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
@@ -56,12 +38,8 @@ class Listener(StreamListener):
         d['twitter_id'] = decoded['id_str']
         d['retweet_twitter_id'] = retweet_twitter_id
         d['usr_twitter_id'] = user_id
-        # d['replied_to'] = replied_to
-        d['coordinates'] = str(decoded['coordinates'])
         d['usr_place'] = str(decoded['user']['location'])
         d['lang'] = lang
-        # d['replied_to'] = replied_to
-        # d['place'] = place
 
         _ = Tweet.objects.create_tweet(d)
         return(True)
