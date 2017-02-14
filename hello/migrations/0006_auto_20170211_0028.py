@@ -16,10 +16,7 @@ class Migration(migrations.Migration):
             model_name='departementfrmodel',
             name='id',
         ),
-        migrations.RemoveField(
-            model_name='villefrmodel',
-            name='id',
-        ),
+
         migrations.AlterField(
             model_name='departementfrmodel',
             name='code',

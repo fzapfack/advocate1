@@ -13,10 +13,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='regionfrmodel',
-            name='id',
-        ),
+
         migrations.AlterField(
             model_name='departementfrmodel',
             name='region_code',

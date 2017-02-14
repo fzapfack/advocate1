@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='VilleFRModel',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('code', models.IntegerField()),

@@ -12,10 +12,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='villefrmodel',
-            name='id',
-        ),
+
         migrations.AlterField(
             model_name='villefrmodel',
             name='name',
