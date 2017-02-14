@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hello', '0012_auto_20170211_1115'),
+        ('hello', '0001_initial'),
     ]
 
     operations = [
@@ -59,14 +59,5 @@ class Migration(migrations.Migration):
                 ('num_tweets_net', models.IntegerField(null=True)),
                 ('color', models.CharField(default='GREY', max_length=10)),
             ],
-        ),
-        migrations.DeleteModel(
-            name='DepartementFRModel',
-        ),
-        migrations.DeleteModel(
-            name='RegionFRModel',
-        ),
-        migrations.DeleteModel(
-            name='VilleFRModel',
         ),
     ]
