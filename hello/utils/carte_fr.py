@@ -134,14 +134,14 @@ class Map:
         return found, res
 
     def extract_region(self, s):
-        if s is None or s == '':
+        if s is None or s == '' or s == 'None':
             return 'UNKNOWN'
         else:
             res = None
             if not self.intialized:
                 self.initialize()
             words = [unidecode(w).lower().strip() for w in s.split(',')]
-            words = [w for w in words if w != 'france' and w != '' and w is not None and w != 'NULL']
+            words = [w for w in words if w != 'france' and w != '' and w is not None and w != 'NULL' and w != 'None']
             found = False
             for func in [self.lookup_region, self.lookup_department, self.lookup_city]:
                 res = func(words)

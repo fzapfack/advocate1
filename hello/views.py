@@ -5,6 +5,21 @@ from listener.models import Tweet as TweetModel
 from hello.models import Region
 from hello.utils.carte_fr import Map
 
+from hello.models import Region
+regions = Region.objects.all()
+for r in regions:
+    r.num_tweets_pos = 0
+    r.num_tweets_neg = 0
+    r.num_tweets_net = 0
+    r.save()
+
+from listener.models import Tweet as TweetModel
+res = TweetModel.objects.all()
+for t in res:
+    t.added_map = False
+    t.usr_region = None
+    t.save()
+
 # Create your views here.
 def db(request):
     greeting = Greeting()
