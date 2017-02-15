@@ -45,6 +45,7 @@
         <div class="col-md-7">
 {#            <div id="regions_div"  class="thumbnail pagination-centered text-center center-block" style="width: 570px; height: 360px;">#}
 {#            </div>#}
+            <h4 class="text-center"> <u> {{ num_local }} tweets localisés</u> : Cliquer sur une région pour plus d'informations</h4>
             <div id="map" class="thumbnail col-md-8 text-center" style="width: 50em; height: 50em;"></div>
         </div>
 
@@ -102,18 +103,22 @@
     map.data.addListener('mouseover', function(event) {
         map.data.revertStyle();
         map.data.overrideStyle(event.feature, {strokeWeight: 8});
-        infowindow.setContent(
-                "<h5><u>"+event.feature.getProperty('name')+"</u></h5> " +
-                "<p><b>Tweets positifs:" + event.feature.getProperty('num_pos') + "</p></b>"+
-                "<p><b>Tweets négatifs:" + event.feature.getProperty('num_neg') + "</p></b>"+
-                "<p><b>Tweets neutres:" + event.feature.getProperty('num_net') + "</p></b>");
-        infowindow.setPosition(event.feature.getProperty('position'));
-        infowindow.open(map);
+
     });
 
     map.data.addListener('mouseout', function(event) {
         map.data.revertStyle();
         infowindow.close();
+    });
+
+    map.data.addListener('click', function(event) {
+        infowindow.setContent(
+                "<h5><u>"+event.feature.getProperty('name')+"</u>: " + event.feature.getProperty('num_tweets') + " tweets</h5> " +
+                "<p><b>Tweets positifs:" + event.feature.getProperty('reg_num_pos') + "</p></b>"+
+                "<p><b>Tweets négatifs:" + event.feature.getProperty('reg_num_neg') + "</p></b>"+
+                "<p><b>Tweets neutres:" + event.feature.getProperty('reg_num_net') + "</p></b>");
+        infowindow.setPosition(event.feature.getProperty('position'));
+        infowindow.open(map);
     });
     }
 
