@@ -3,7 +3,7 @@ import json
 from .models import Greeting
 from listener.models import Tweet as TweetModel
 from hello.models import Region
-
+from hello.utils.carte_fr import Map
 
 # Create your views here.
 def db(request):
