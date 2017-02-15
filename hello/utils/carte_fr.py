@@ -134,7 +134,7 @@ class Map:
         return found, res
 
     def extract_region(self, s):
-        if ~bool(s):
+        if s is None or s == '':
             return 'UNKNOWN'
         else:
             res = None
