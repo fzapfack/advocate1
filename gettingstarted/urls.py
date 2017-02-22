@@ -9,7 +9,7 @@ import hello.views
 from listener.views import add_tweet_view
 from listener.views import get_name
 import predictor.views
-
+from listener.regbackend import MyRegistrationView
 
 # Examples:
 # url(r'^$', 'gettingstarted.views.home', name='home'),
@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^test/(?P<id>\w+)/$', predictor.views.test, name='test_page'),
     url(r'^start_listening', add_tweet_view, name='start_listening'),
     url(r'^labeling', get_name, name='labeling'),
+    url(r'^accounts/register/$', MyRegistrationView.as_view(),
+            name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]

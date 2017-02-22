@@ -20,61 +20,106 @@
     </div>
 </div>
 
-<div class="container col-md-10 col-md-offset-1">
-    <div class="col-md-9">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <i class="fa fa-long-arrow-right fa-fw"></i>
-                <strong> Quel est le sentiment du tweet suivant:  </strong>
-                <span class="text-right">
-                    (<strong>{{ num_labels }} </strong><i class="fa fa-arrow-circle-right"> tweets déjà labelisés)</i>
-                </span>
-            </h3>
+<div class="row col-md-12">
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-long-arrow-right fa-fw"></i>
+                    <strong> Quel est le sentiment du tweet suivant:  </strong>
+                    <span class="text-right">
+                        (<strong>{{ num_labels }} </strong><i class="fa fa-arrow-circle-right"> tweets déjà labelisés)</i>
+                    </span>
+                </h3>
 
 
-        </div>
-        <div class="panel-body">
-            {% if tweet %}
-    {#                <h2 class="text-center"></h2>#}
-                    <br /><br />
-                    <div class="col-md-10 text-center col-md-offset-1">
-                        <p style="font-size:1.6em">
-                            <i class="fa fa-quote-left" aria-hidden="true"></i>
-                            {{ tweet }}
-                            <i class="fa fa-quote-right" aria-hidden="true"></i>
-                        </p>
-                        <br />
-                        <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
+            </div>
+            <div class="panel-body">
+                {% if tweet %}
+        {#                <h2 class="text-center"></h2>#}
                         <br /><br />
-                        <p style="font-size:1.3em">
-                            <i class="fa fa-quote-left" aria-hidden="true"></i>
-                            {{ retweet }}
-                            <i class="fa fa-quote-right" aria-hidden="true"></i>
-                        </p>
-                        <br />
+                        <div class=" text-center col-md-offset-1">
+                            <p style="font-size:1.6em">
+                                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                                {{ tweet }}
+                                <i class="fa fa-quote-right" aria-hidden="true"></i>
+                            </p>
+                            <br />
+                            <strong style="font-size:1.2em"> <u> Retweeted from </u> </strong>
+                            <br /><br />
+                            <p style="font-size:1.3em">
+                                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                                {{ retweet }}
+                                <i class="fa fa-quote-right" aria-hidden="true"></i>
+                            </p>
+                            <br />
 
-                        <form class="form-horizontal" action="" method="post"> {% csrf_token %}
-                            <div class="col-xs-4 text-center col-xs-offset-4">
-                                {{ form|crispy }}
-                                <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
-                {#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
-                            </div>
-                        </form>
+                            <form class="form-horizontal" action="" method="post"> {% csrf_token %}
+                                <div class="col-xs-4 text-center col-xs-offset-4">
+                                    {{ form|crispy }}
+                                    <input type="submit" value="Tweet Suivant" class="btn btn-primary"/>
+                    {#                <input type="submit" value="Terminer" class="btn btn-success"/>#}
+                                </div>
+                            </form>
+                        </div>
+
+                {% else %}
+                    <div class="text-center col-md-offset-1">
+                        <h2 class="text-center"> Aucun tweet récent à labeliser.
+                            Pouvez vous réessayer plus tard svp (genre dans 5 min)</h2>
                     </div>
-
-            {% else %}
-                <div class="col-md-10 text-center col-md-offset-1">
-                    <h2 class="text-center"> Aucun tweet récent à labeliser.
-                        Pouvez vous réessayer plus tard svp (genre dans 5 min)</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Leaderboard</h3>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <span class="badge">just now</span>
+                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">4 minutes ago</span>
+                        <i class="fa fa-fw fa-comment"></i> Commented on a post
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">23 minutes ago</span>
+                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">46 minutes ago</span>
+                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">1 hour ago</span>
+                        <i class="fa fa-fw fa-user"></i> A new user has been added
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">2 hours ago</span>
+                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">yesterday</span>
+                        <i class="fa fa-fw fa-globe"></i> Saved the world
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">two days ago</span>
+                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+                    </a>
                 </div>
-            {% endif %}
-
+                <div class="text-right">
+                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-</div>
 
 
 

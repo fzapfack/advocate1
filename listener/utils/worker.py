@@ -14,34 +14,37 @@ class Listener(StreamListener):
 
     def on_data(self, data): #on_data
         decoded = json.loads(data)
-        user_lang = decoded['user']['lang']
-        lang = decoded['lang']
-        if ~bool(lang):
-            if ~bool(user_lang):
-                lang = 'NULL'
-            else:
+        if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
+            print("skip retweet")
+        else:
+            txt = str(decoded['text'])
+            user_id = None
+            user_lang = None
+            user_name = None
+            if 'user' in decoded and decoded['user'] is not None:
+                user_id = decoded['user']['id_str']
+                user_name = decoded['user']['screen_name']
+                user_lang = decoded['user']['lang']
+            lang = decoded['lang']
+            if ~bool(lang):
                 lang = user_lang
 
-        txt = str(decoded['text'])
-        user_id = None
-        if 'user' in decoded and decoded['user'] is not None:
-            user_id = decoded['user']['id_str']
-        retweet = None
-        retweet_twitter_id = None
-        if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
-            retweet = str(decoded['retweeted_status']['text'])
-            retweet_twitter_id = decoded['retweeted_status']['id_str']
+            retweet = None
+            retweet_twitter_id = None
+            # if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
+            #     retweet = str(decoded['retweeted_status']['text'])
+            #     retweet_twitter_id = decoded['retweeted_status']['id_str']
+            reply = decoded['in_reply_to_status_id_str']
+            d = {}
+            d['txt'] = txt
+            d['twitter_id'] = decoded['id_str']
+            d['usr_twitter_id'] = user_id
+            d['usr_screen_name'] = user_name
+            d['usr_place'] = str(decoded['user']['location'])
+            d['lang'] = lang
+            d['in_reply_to'] = reply
 
-        d = {}
-        d['txt'] = txt
-        d['retweet'] = retweet
-        d['twitter_id'] = decoded['id_str']
-        d['retweet_twitter_id'] = retweet_twitter_id
-        d['usr_twitter_id'] = user_id
-        d['usr_place'] = str(decoded['user']['location'])
-        d['lang'] = lang
-
-        _ = Tweet.objects.create_tweet(d)
+            _ = Tweet.objects.create_tweet(d)
         return(True)
 
     def on_error(self, status_code):
