@@ -15,7 +15,8 @@ class Listener(StreamListener):
     def on_data(self, data): #on_data
         decoded = json.loads(data)
         if 'retweeted_status' in decoded and decoded['retweeted_status'] is not None:
-            print("skip retweet")
+            # print("skip retweet")
+            pass
         else:
             txt = str(decoded['text'])
             user_id = None
