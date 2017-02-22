@@ -80,7 +80,6 @@ def index(request):
     context['num_pos'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['POSITIVE']).count()
     context['num_neg'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEGATIVE']).count()
     context['num_net'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEUTRAL']).count()
-    context['num_net'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEUTRAL']).count()
     context['num_local'] = TweetModel.objects.filter(~Q(sentiment_label=None) & ~Q(usr_region='UNKNOWN')).count()
     context['geojson'] = json.dumps(geojson)
 
