@@ -72,7 +72,7 @@ class TweetManager(models.Manager):
         try:
             tweets = self.filter(txt__contains='http')
             for t in tweets:
-                if t.sentement_label is not None:
+                if t.sentiment_label is not None:
                     print(t)
                 else:
                     _ = t.delete()
