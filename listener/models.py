@@ -52,16 +52,33 @@ class TweetManager(models.Manager):
         return tweet
 
     def delete_all(self):
-        _ = self.all().delete()
-        regions = Region.objects.all()
-        for r in regions:
-            r.num_tweets_pos = 0
-            r.num_tweets_pos_pred = 0
-            r.num_tweets_neg = 0
-            r.num_tweets_neg_pred = 0
-            r.num_tweets_net = 0
-            r.num_tweets_net_pred = 0
-            r.save()
+        try:
+            _ = self.all().delete()
+            regions = Region.objects.all()
+            for r in regions:
+                r.num_tweets_pos = 0
+                r.num_tweets_pos_pred = 0
+                r.num_tweets_neg = 0
+                r.num_tweets_neg_pred = 0
+                r.num_tweets_net = 0
+                r.num_tweets_net_pred = 0
+                r.save()
+        except Exception as e:
+            print(e)
+            return False
+        return True
+
+    def delete_html_tweets(self):
+        try:
+            tweets = self.filter(txt__contains='http')
+            for t in tweets:
+                if t.sentement_label is not None:
+                    print(t)
+                else:
+                    _ = t.delete()
+        except Exception as e:
+            print(e)
+            return False
         return True
 
 
@@ -92,7 +109,7 @@ class Tweet(models.Model):
     retweet_twitter_id = models.CharField(max_length=30, db_tablespace="indexes", null=True)
     usr_twitter_id = models.CharField(max_length=30, db_tablespace="indexes", null=True)
     usr_screen_name = models.CharField(max_length=30, db_tablespace="indexes", null=True)
-    usr_place = models.CharField(max_length=50, db_tablespace="indexes", null=True)
+    usr_place = models.CharField(max_length=80, db_tablespace="indexes", null=True)
     usr_region = models.CharField(max_length=60, db_tablespace="indexes", null=True)
     lang = models.CharField(max_length=10, db_tablespace="indexes", null=True)
     in_reply_to = models.CharField(max_length=30, db_tablespace="indexes", null=True)
