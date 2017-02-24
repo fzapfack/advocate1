@@ -15,13 +15,21 @@ class ProfileForm(RegistrationFormUniqueEmail):
 
 
 class TweetForm(forms.ModelForm):
+    SENTIMENT_CHOICES = (
+        (Tweet.SENTIMENTS['POSITIVE'], 'Positif'),
+        (Tweet.SENTIMENTS['NEGATIVE'], 'Negatif'),
+        (Tweet.SENTIMENTS['NEUTRAL'], 'Neutre'),
+    )
+    sentiment_label = forms.ChoiceField(widget=forms.RadioSelect,
+                                        choices=SENTIMENT_CHOICES)
+    sentiment_label.label = "D'après vous quel est le sentiment"
 
     class Meta:
         model = Tweet
         fields = ['sentiment_label']
-        labels = {
-            'sentiment_label': "D'après vous quel est le sentiment",
-        }
+        # labels = {
+        #     'sentiment_label': "D'après vous quel est le sentiment",
+        # }
 
     def clean_sentiment_label(self):
         sent = self.cleaned_data.get('sentiment_label')
