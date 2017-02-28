@@ -228,7 +228,7 @@ class Map:
             if r.num_tweets_pos==0 and r.num_tweets_neg==0 and r.num_tweets_net==0:
                 r.color = Region.COLORS['UNKNOWN']
             else:
-                ground_hue = [60,0,120]
+                ground_hue = [120,0,60  ]
                 hue = sum([ground_hue[i] * h / sum(num_tweets) for i, h in enumerate(num_tweets)])/360
                 rgb = [round(i*255) for i in colorsys.hsv_to_rgb(hue,1,1)]
                 r.color = '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
