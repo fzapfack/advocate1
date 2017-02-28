@@ -1,7 +1,8 @@
 import csv
 from unidecode import unidecode
 import json
-import numpy as np
+import colorsys
+# import numpy as np
 from django.db.models import Q
 from hello.models import Region
 from listener.models import Tweet
@@ -223,15 +224,20 @@ class Map:
         res = Region.objects.all()
         for r in res:
             num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
-            ind = np.argmax(num_tweets)
+            # ind = np.argmax(num_tweets)
             if r.num_tweets_pos==0 and r.num_tweets_neg==0 and r.num_tweets_net==0:
                 r.color = Region.COLORS['UNKNOWN']
-            elif ind==0:
-                r.color = Region.COLORS['POSITIVE']
-            elif ind==1:
-                r.color = Region.COLORS['NEGATIVE']
             else:
-                r.color = Region.COLORS['NEUTRAL']
+                ground_hue = [60,0,120]
+                hue = sum([ground_hue[i] * h / sum(num_tweets) for i, h in enumerate(num_tweets)])/360
+                rgb = [round(i*255) for i in colorsys.hsv_to_rgb(hue,1,1)]
+                r.color = '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
+            # elif ind==0:
+            #     r.color = Region.COLORS['POSITIVE']
+            # elif ind==1:
+            #     r.color = Region.COLORS['NEGATIVE']
+            # else:
+            #     r.color = Region.COLORS['NEUTRAL']
             r.save()
         return True
 
