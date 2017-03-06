@@ -33,7 +33,7 @@ def get_name(request):
     if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
-        tweet = non_labelled.first()
+        tweet = non_labelled.last()
         predictor = Predictor()
         tweet.sentiment_predicted = predictor.sentiment_predict(tweet)
     if request.method == 'POST':
