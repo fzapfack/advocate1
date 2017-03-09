@@ -100,6 +100,8 @@ class Tweet(models.Model):
     )
     sentiment_predicted = models.IntegerField(choices=SENTIMENT_CHOICES,
                                               db_tablespace="indexes", null=True)
+    sentiment_alchemy = models.IntegerField(choices=SENTIMENT_CHOICES,
+                                              db_tablespace="indexes", null=True)
     sentiment_label = models.IntegerField(choices=SENTIMENT_CHOICES,
                                           db_tablespace="indexes", null=True)
 

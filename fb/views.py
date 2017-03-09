@@ -101,7 +101,7 @@ def page_results(request):
             d['num_likes'] = len(u[1]['likes'])
             d['num_comments'] = len(u[1]['comments'])
             users_list.append(d)
-        
+
         context = {
             "page": page,
             "users_list": users_list

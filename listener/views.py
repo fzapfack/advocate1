@@ -10,6 +10,7 @@ from .models import Tweet as TweetModel
 import listener.config
 from listener.models import Profile
 from predictor.utils.predictor import Predictor
+from predictor.utils.alchemy_predictor import AlchemyPredictor
 
 
 def sentiment_str(tweet):
@@ -26,16 +27,19 @@ def get_name(request):
     prof_usr = Profile.objects.get_create_usr_profile(request.user.pk)
 
     # non_labelled = TweetModel.objects.filter(in_reply_to=None, sentiment_label=None)
-    non_labelled = TweetModel.objects.filter(Q(in_reply_to=None, sentiment_label=None) & ~Q(txt__icontains='http'))
+    non_labelled = TweetModel.objects.filter(Q(in_reply_to=None, sentiment_label=None) &
+                                             ~Q(txt__icontains='http') & Q(lang='fr'))
     if non_labelled is None or len(non_labelled) < 1:
-        non_labelled = TweetModel.objects.filter(sentiment_label=None,in_reply_to=None)
+        non_labelled = TweetModel.objects.filter(sentiment_label=None, in_reply_to=None, lang='fr')
     num_labels = TweetModel.objects.filter(~Q(sentiment_label=None)).count()
+    accuracy = 0
     if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
         tweet = non_labelled.last()
-        predictor = Predictor()
-        tweet.sentiment_predicted = predictor.sentiment_predict(tweet)
+        predictor = AlchemyPredictor()
+        tweet.sentiment_predicted = predictor.predict_tweet(tweet)
+        num_labels, accuracy = predictor.get_accuracy()
     if request.method == 'POST':
         form = TweetForm(request.POST, instance=tweet)
         if form.is_valid():
@@ -54,6 +58,7 @@ def get_name(request):
         'tweet': tweet,
         'form': form,
         'num_labels': num_labels,
+        "accuracy": accuracy,
         'prof_list': prof_list,
         'prediction': sentiment_str(tweet)
     }
