@@ -55,7 +55,6 @@ class AlchemyPredictor:
         return True
 
     def get_accuracy(self):
-        if self.test_all_labelled():
-            labelled = Tweet.objects.filter(~Q(sentiment_label=None))
-            ratio = float(labelled.filter(sentiment_label=F('sentiment_alchemy')).count())/labelled.count()
-            return labelled.count(), round(ratio*100)
+        labelled = Tweet.objects.filter(~Q(sentiment_label=None))
+        ratio = float(labelled.filter(sentiment_label=F('sentiment_alchemy')).count())/labelled.count()
+        return labelled.count(), round(ratio*100)
