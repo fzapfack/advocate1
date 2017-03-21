@@ -36,7 +36,7 @@ def get_name(request):
     if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
-        tweet = non_labelled.last()
+        tweet = non_labelled.first()
         predictor = AlchemyPredictor()
         tweet.sentiment_predicted = predictor.predict_tweet(tweet)
         num_labels, accuracy = predictor.get_accuracy()

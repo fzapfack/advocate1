@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 import csv
 from django.http import HttpResponse
 from fb.utils.fbmanager import FbManager
+from fb.utils.igmanager import IgManager
 from fb.config import saved_list
 # Create your views here.
 
@@ -109,3 +110,29 @@ def page_results(request):
         return render(request, 'page_results.html', context)
     else:
         return redirect("/test_fb")
+
+
+def ig_auth(request):
+    ig = IgManager(redirect_scheme=request.scheme, redirect_host=request.META['HTTP_HOST'],
+                   redirect_path="/ig_redirect/")
+    url = ig.auth_url()
+    print(request)
+    print(request.GET)
+    # return HttpResponse(url)
+    return redirect(url)
+
+
+def ig_auth_resp(request, code=None):
+    if 'code' not in request.GET:
+        return HttpResponse("Une erreur est survenue. Merci de réessayer")
+    else:
+        code = request.GET['code']
+        ig = IgManager(redirect_scheme=request.scheme, redirect_host=request.META['HTTP_HOST'],
+                       redirect_path="/ig_redirect/")
+        res = ig.set_access_token(code)
+        l = ig.get_user_media()
+
+
+        return HttpResponse(l)
+
+
