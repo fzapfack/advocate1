@@ -119,6 +119,7 @@ class Tweet(models.Model):
     added_map = models.BooleanField(default=False)
     added_map_pred = models.BooleanField(default=False)
     training_tweet = models.BooleanField(default=False)
+    training_tweet2 = models.BooleanField(default=False)
 
     # GENERAL = 0
     # ECONOMY = 1
