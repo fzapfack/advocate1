@@ -185,7 +185,7 @@ class Map:
         return added
 
     def add_tweet(self, tweet, labeled_data=True):
-        added = self.added_or_reg_unknown(tweet, labeled_data=True)
+        added = self.added_or_reg_unknown(tweet, labeled_data=labeled_data)
         if added:
             print("Tweet already added")
         else:
@@ -218,17 +218,20 @@ class Map:
                 tweet.save()
         return True
 
-    def update_regions_color(self):
+    def update_regions_color(self, labeled_data=True):
         if not self.intialized:
             self.initialize()
         res = Region.objects.all()
         for r in res:
-            num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
+            if labeled_data:
+                num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
+            else:
+                num_tweets = [r.num_tweets_pos_pred, r.num_tweets_neg_pred, r.num_tweets_net_pred]
             # ind = np.argmax(num_tweets)
-            if r.num_tweets_pos==0 and r.num_tweets_neg==0 and r.num_tweets_net==0:
+            if sum(num_tweets) == 0:
                 r.color = Region.COLORS['UNKNOWN']
             else:
-                ground_hue = [120,0,60  ]
+                ground_hue = [120, 0, 60]
                 hue = sum([ground_hue[i] * h / sum(num_tweets) for i, h in enumerate(num_tweets)])/360
                 rgb = [round(i*255) for i in colorsys.hsv_to_rgb(hue,1,1)]
                 r.color = '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
@@ -250,10 +253,10 @@ class Map:
             res = Tweet.objects.filter(~Q(sentiment_predicted=None) & Q(added_map_pred=False))
         if len(res)>0:
             for tweet in res:
-                self.add_tweet(tweet)
+                self.add_tweet(tweet, labeled_data)
         else:
             print('No tweet to update map')
-        self.update_regions_color()
+        self.update_regions_color(labeled_data)
         return True
 
 

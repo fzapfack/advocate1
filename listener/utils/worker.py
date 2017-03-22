@@ -47,7 +47,6 @@ class Listener(StreamListener):
                 d['usr_place'] = str(decoded['user']['location'])
                 d['lang'] = lang
                 d['in_reply_to'] = reply
-
                 _ = Tweet.objects.create_tweet(d)
         return(True)
 

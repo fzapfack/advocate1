@@ -47,7 +47,9 @@
                     <i class="fa fa-arrow-circle-right fa-fw"></i>
                     <strong> Quel est le sentiment du tweet suivant:  </strong>
                     <p>
-                        (Sur <strong>{{ num_labels }} </strong> tweets labelisés manuellement, notre précision est de <strong>{{ accuracy }} </strong>%).
+                        (<strong>{{ num_labels }} </strong> tweets labelisés manuellement.
+                        <strong>{{ num_test_correct }}</strong> bonnes prédictions sur
+                        <strong>{{ num_test }}</strong> tweets en test).
                     </p>
                 </h3>
 

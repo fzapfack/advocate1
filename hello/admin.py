@@ -5,7 +5,8 @@ from .models import Region
 
 # Register your models here.
 class RegionAdmin(admin.ModelAdmin):
-    list_display = ["name", "code", "num_tweets_pos", "num_tweets_neg", 'num_tweets_net', "color"]
+    list_display = ["name", "code", "num_tweets_pos", "num_tweets_neg", 'num_tweets_net',
+                    "num_tweets_pos_pred", "num_tweets_neg_pred", 'num_tweets_net_pred', "color"]
 
     class Meta:
         model = Region

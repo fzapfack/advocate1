@@ -43,9 +43,17 @@ def flat_list(l,res=[]):
 
 
 def index(request):
+    m = Map()
+    labeled_data = False  # Map based on prediction
+    m.add_all_tweets(labeled_data)
+
     regions = Region.objects.all()
     features = []
     for r in regions:
+        if labeled_data:
+            num_tweets = [r.num_tweets_pos, r.num_tweets_neg, r.num_tweets_net]
+        else:
+            num_tweets = [r.num_tweets_pos_pred, r.num_tweets_neg_pred, r.num_tweets_net_pred]
         pos = []
         coord = json.loads(r.geometry_coord)
         flat_list(coord,pos)
@@ -55,10 +63,10 @@ def index(request):
                 "name": r.name,
                 "color": r.color,
                 "position": {"lng": float(sum(pos[::2]))/len(pos[::2]), "lat": float(sum(pos[1::2]))/len(pos[1::2])},
-                "reg_num_pos": r.num_tweets_pos,
-                "reg_num_neg": r.num_tweets_neg,
-                "reg_num_net": r.num_tweets_net,
-                "num_tweets": r.num_tweets_pos + r.num_tweets_neg + r.num_tweets_net
+                "reg_num_pos": num_tweets[0],
+                "reg_num_neg": num_tweets[1],
+                "reg_num_net": num_tweets[2],
+                "num_tweets": sum(num_tweets)
             },
             "geometry": {
                 "type": r.geometry_type,
@@ -71,17 +79,23 @@ def index(request):
         "type": "FeatureCollection",
         "features": features
     }
-    m = Map()
-    m.add_all_tweets()
+
     context = {}
     context['authenticated'] = request.user.is_authenticated()
+    context['geojson'] = json.dumps(geojson)
     if context['authenticated'] == True:
         context['username'] = request.user.username
-    context['num_pos'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['POSITIVE']).count()
-    context['num_neg'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEGATIVE']).count()
-    context['num_net'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEUTRAL']).count()
-    context['num_local'] = TweetModel.objects.filter(~Q(sentiment_label=None) & ~Q(usr_region='UNKNOWN')).count()
-    context['geojson'] = json.dumps(geojson)
+    if labeled_data:
+        context['num_pos'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['POSITIVE']).count()
+        context['num_neg'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEGATIVE']).count()
+        context['num_net'] = TweetModel.objects.filter(sentiment_label=TweetModel.SENTIMENTS['NEUTRAL']).count()
+        context['num_local'] = TweetModel.objects.filter(~Q(sentiment_label=None) & ~Q(usr_region='UNKNOWN')).count()
+    else:
+        context['num_pos'] = TweetModel.objects.filter(sentiment_predicted=TweetModel.SENTIMENTS['POSITIVE']).count()
+        context['num_neg'] = TweetModel.objects.filter(sentiment_predicted=TweetModel.SENTIMENTS['NEGATIVE']).count()
+        context['num_net'] = TweetModel.objects.filter(sentiment_predicted=TweetModel.SENTIMENTS['NEUTRAL']).count()
+        context['num_local'] = TweetModel.objects.filter(~Q(sentiment_predicted=None) & ~Q(usr_region='UNKNOWN')).count()
+
 
     return render(request, 'index.html', context)
 

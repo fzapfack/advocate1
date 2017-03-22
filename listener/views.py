@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.db.models import F
 from celery.task.control import inspect
 
 from listener.tasks import add_tweet
@@ -9,8 +10,9 @@ from .forms import TweetForm
 from .models import Tweet as TweetModel
 import listener.config
 from listener.models import Profile
-from predictor.utils.predictor import Predictor
-from predictor.utils.alchemy_predictor import AlchemyPredictor
+from predictor.utils.bow_predictor import BowPredictor
+# from predictor.utils.predictor import Predictor
+# from predictor.utils.alchemy_predictor import AlchemyPredictor
 
 
 def sentiment_str(tweet):
@@ -32,14 +34,16 @@ def get_name(request):
     if non_labelled is None or len(non_labelled) < 1:
         non_labelled = TweetModel.objects.filter(sentiment_label=None, in_reply_to=None, lang='fr')
     num_labels = TweetModel.objects.filter(~Q(sentiment_label=None)).count()
+
     accuracy = 0
     if non_labelled is None or len(non_labelled) < 1:
         tweet = TweetModel()
     else:
         tweet = non_labelled.first()
-        predictor = AlchemyPredictor()
-        tweet.sentiment_predicted = predictor.predict_tweet(tweet)
-        num_labels, accuracy = predictor.get_accuracy()
+        # predictor = AlchemyPredictor()
+        if tweet.sentiment_predicted is None:
+            tweet.sentiment_predicted = BowPredictor.predict_tweet_static(tweet, save=True)
+        # num_labels, accuracy = predictor.get_accuracy()
     if request.method == 'POST':
         form = TweetForm(request.POST, instance=tweet)
         if form.is_valid():
@@ -54,10 +58,14 @@ def get_name(request):
         #     return HttpResponseRedirect('/labeling/')
     else:
         form = TweetForm(instance=tweet)
+    test_tweet = TweetModel.objects.filter(~Q(sentiment_label=None) & Q(training_tweet=False))
+    num_test_correct = test_tweet.filter(sentiment_label=F('sentiment_predicted')).count()
     context = {
         'tweet': tweet,
         'form': form,
         'num_labels': num_labels,
+        'num_test': test_tweet.count(),
+        'num_test_correct': num_test_correct,
         "accuracy": accuracy,
         'prof_list': prof_list,
         'prediction': sentiment_str(tweet)

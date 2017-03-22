@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from hello.models import Region
 
+
 class ProfileManager(models.Manager):
     def get_create_usr_profile(self,pk):
         try:
@@ -117,6 +118,7 @@ class Tweet(models.Model):
     in_reply_to = models.CharField(max_length=30, db_tablespace="indexes", null=True)
     added_map = models.BooleanField(default=False)
     added_map_pred = models.BooleanField(default=False)
+    training_tweet = models.BooleanField(default=False)
 
     # GENERAL = 0
     # ECONOMY = 1
