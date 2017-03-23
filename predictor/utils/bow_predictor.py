@@ -120,7 +120,7 @@ class BowPredictor:
         return y
 
     @staticmethod
-    def predict_all(new=False):
+    def predict_all(new=True):
         if BowPredictor.predictor is None:
             predictor = BowPredictor()
             predictor.train(update_predictor=True, use_idf=True, smooth_idf=True, sublinear_tf=False)
