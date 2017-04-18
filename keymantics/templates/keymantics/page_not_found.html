@@ -1,4 +1,4 @@
-{% extends "base_fb.html" %}
+{% extends "keymantics/base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
@@ -10,12 +10,17 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="text-center">
                     <h1>Oops!</h1>
-                    <h2> Page Introuvable. </h2>
+                    <h2> Url Not valid </h2>
                     <div class="error-details">
-                        Entrez une nouvelle page svp
+                        We are unable to extract the title or the description from that page.
+                    </div>
+                    <div>
+                        <small>
+                            (Because we use a simple http client we sometimes get 403 error).
+                        </small>
                     </div>
                     <div >
-                        <a href="/test_fb/" class="btn btn-primary btn-lg">
+                        <a href="/keymantics/" class="btn btn-primary btn-lg">
                             Retour </a>
                     </div>
                 </div>

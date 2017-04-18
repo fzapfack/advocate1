@@ -157,8 +157,7 @@ class BowPredictor:
 
         print("\n\n >>>>results training dataset")
         y_pred = self.clf.predict(tokens)
-        labels = list(set(y_train))
-        print(classification_report(y_true=y_train, y_pred=y_pred, labels=labels,
+        print(classification_report(y_true=y_train, y_pred=y_pred, labels=[-1, 0, 1],
                                     target_names=['neg', 'net', 'pos']))
         print("Accuracy: ", np.sum(np.array(y_train) == np.array(y_pred)) / len(np.array(y_train)))
         if update_predictor:

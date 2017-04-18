@@ -1,0 +1,29 @@
+{% extends "base_fb.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div id="" >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="text-center">
+                    <h1>Oops!</h1>
+                    <h2> Posts Introuvables . </h2>
+                    <div class="error-details">
+                        Entrez une nouvelle page contenant des posts publics svp
+                    </div>
+                    <div >
+                        <a href="/test_fb/" class="btn btn-primary btn-lg">
+                            Retour </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

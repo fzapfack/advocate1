@@ -1,0 +1,38 @@
+{% extends "keymantics/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="jumbotron text-center" style="height: 100%">
+    <div class="container">
+        <h1>
+            Résultats pour la recherche:
+        </h1>
+        <p>
+            <i class="fa fa-quote-left" aria-hidden="true"></i>
+            <strong>{{ query }}</strong>
+            <i class="fa fa-quote-right" aria-hidden="true"></i>
+        </p>
+        <div class="">
+            <a href="/keymantics/" class="btn btn-default">
+                Nouvelle recherche
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center">
+    <h1>
+        Type: <strong>{{ type.value }}</strong>
+        <div><small>Probabilite: {{ type.proba }}%</small></div>
+    </h1>
+    <h1>
+        Produit: <strong> {{ product.value }}</strong>
+        <div><small>Probabilite: {{ product.proba }}%</small></div>
+    </h1>
+</div>
+
+
+
+{% endblock %}

@@ -11,6 +11,7 @@ from listener.regbackend import MyRegistrationView
 from fb.views import fb_login
 from fb.views import page_results
 from fb.views import ig_auth, ig_auth_resp
+from keymantics.views import keymantics_open, keymantics_results
 
 
 admin.autodiscover()
@@ -28,6 +29,8 @@ urlpatterns = [
     url(r'^test/(?P<id>\w+)/$', predictor.views.test, name='test_page'),
     url(r'^start_listening', add_tweet_view, name='start_listening'),
     url(r'^labeling', get_name, name='labeling'),
+    url(r'^keymantics/results/$', keymantics_results),
+    url(r'^keymantics/$', keymantics_open),
     url(r'^accounts/register/$', MyRegistrationView.as_view(),
             name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),

@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'listener',
     'predictor',
     'fb',
+    'keymantics',
 )
 
 MIDDLEWARE_CLASSES = (

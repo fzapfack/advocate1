@@ -1,7 +1,12 @@
-{% extends "base_fb.html" %}
+{% extends "fb/base_fb.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
+
+{% block jquery %}
+alert("ca marche");
+    alert('test jquery');
+{% endblock %}
 {% block content %}
 
 <div id="" >
