@@ -156,7 +156,7 @@ class Scrapper(object):
         setattr(sys.modules['__main__'], 'TweetTokeniser', TweetTokeniser)
         setattr(sys.modules['__main__'], 'preproc', preproc)
         self.clf_type = joblib.load('keymantics/utils/clf_type.pkl')
-        self.clf_product = joblib.load('keymantics/utils/clf_product.pkl')
+        self.clf_product = joblib.load('keymantics/utils/clf_product2.pkl')
         return True
 
     def predict(self, url):
