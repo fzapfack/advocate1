@@ -6,7 +6,7 @@ from listener.models import Tweet
 
 class AlchemyPredictor:
     default_url = "https://gateway-a.watsonplatform.net/calls"
-    default_api_key = '027b9d248be634d00a076545c183afda216d3691'
+    default_api_key = 'XXXX'
 
     def __init__(self, url=default_url, api_key=default_api_key):
         self.url = url
@@ -56,5 +56,6 @@ class AlchemyPredictor:
 
     def get_accuracy(self):
         labelled = Tweet.objects.filter(~Q(sentiment_label=None))
-        ratio = float(labelled.filter(sentiment_label=F('sentiment_alchemy')).count())/labelled.count()
+        ratio = float(labelled.filter(sentiment_label=F('sentiment_
+        ')).count())/labelled.count()
         return labelled.count(), round(ratio*100)

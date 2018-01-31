@@ -1,8 +1,13 @@
-# python-getting-started
+# Advocate
 
-A barebones Python app, which can easily be deployed to Heroku.
+Real-time Monitoring of french elections using tweeter streaming API.
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+Tweets are fetched and analysed (sentiment analysis) in near real-time.
+Benchmark of IBM Watson Alchemy and 'NLP wordvectors techniques'.
+Trial of an RNN approach
+Visualization using google maps api
+
+Check sample result at: https://advocate1.herokuapp.com/
 
 ## Running Locally
 
@@ -13,10 +18,12 @@ $ git clone git@github.com:heroku/python-getting-started.git
 $ cd python-getting-started
 
 $ pip install -r requirements.txt
-
+$ sudo apt-get install redis-server
 $ createdb python_getting_started
 
+$ python manage.py makemigrations
 $ python manage.py migrate
+$ python manage.py createsuperuser
 $ python manage.py collectstatic
 
 $ heroku local

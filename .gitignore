@@ -5,3 +5,6 @@ staticfiles
 db.sqlite3
 *.rdb
 notes.txt
+
+**secrets*.json
+

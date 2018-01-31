@@ -10,8 +10,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
+import json
 import dj_database_url
 
+with open('secrets.json', 'r') as f:
+    conf = json.load(f)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -22,7 +25,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: change this before deploying to production!
-SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
+SECRET_KEY = conf['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -168,25 +171,21 @@ CELERY_TIMEZONE = 'Africa/Nairobi'
 
 
 # Twitter credentials
-TWITTER_CREDENTIALS = {}
-TWITTER_CREDENTIALS['ckey'] = "lrP9f7qOUMTgyokBIRhYClP7o"
-TWITTER_CREDENTIALS['csecret'] = "TAhq4opPrvags8A3mkT6u0u0VX2au6kb1Gx07erTgPZTOkkTzE"
-TWITTER_CREDENTIALS['atoken'] = "124275812-ST7sSfupaPLCNrbg5045c5roEjSTUKl7WbmyCafw"
-TWITTER_CREDENTIALS['asecret'] = "bRfqKHOY88VXz1V2auFL5hQLm5PCI7bGINSaMAmNhHjaa"
+TWITTER_CREDENTIALS = conf['TWITTER']
 
 
 # crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # email
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'advocate.trust@gmail.com'
-EMAIL_HOST_PASSWORD = 'trust-advocate'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = conf['EMAIL']['EMAIL_HOST']
+EMAIL_HOST_USER = conf['EMAIL']['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = conf['EMAIL']['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = conf['EMAIL']['EMAIL_PORT']
+EMAIL_USE_TLS = conf['EMAIL']['EMAIL_USE_TLS']
 
 #DJANGO REGISTRATION REDUX SETTINGS
-REGISTRATION_DEFAULT_FROM_EMAIL = 'advocate.trust@gmail.com'
+REGISTRATION_DEFAULT_FROM_EMAIL = conf['EMAIL']['EMAIL_HOST_USER']
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 SITE_ID = 1

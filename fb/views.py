@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.shortcuts import redirect
 import csv
@@ -7,6 +8,8 @@ from fb.utils.igmanager import IgManager
 from fb.config import saved_list
 # Create your views here.
 
+IGMANAGER = IgManager()
+print(">>>>> DONR")
 
 def fb_login(request):
     context = {}
@@ -68,26 +71,29 @@ def page_results(request):
 
 
 def ig_auth(request):
-    ig = IgManager(redirect_scheme=request.scheme, redirect_host=request.META['HTTP_HOST'],
-                   redirect_path="/ig_redirect/")
-    url = ig.auth_url()
-    print(request)
-    print(request.GET)
-    # return HttpResponse(url)
-    return redirect(url)
+    if not IGMANAGER.access_token:
+        IGMANAGER.set_attributes(redirect_scheme=request.scheme, redirect_host=request.META['HTTP_HOST'],
+                                 redirect_path="/ig_redirect/")
+        url = IGMANAGER.auth_url()
+        return redirect(url)
+    else:
+        return render(request, 'fb/ig_on.html', {})
 
 
 def ig_auth_resp(request, code=None):
     if 'code' not in request.GET:
         return HttpResponse("Une erreur est survenue. Merci de réessayer")
     else:
+        print('>>>> Resp')
         code = request.GET['code']
-        ig = IgManager(redirect_scheme=request.scheme, redirect_host=request.META['HTTP_HOST'],
-                       redirect_path="/ig_redirect/")
-        res = ig.set_access_token(code)
-        l = ig.get_user_media()
+        print(">> code=", code)
+        res = IGMANAGER.set_access_token(code)
+        print("Access token: ", IGMANAGER.access_token)
+        # l = ig.search_user(username='fabrice zapfack')
+        # l = ig.get_user_media()
+        return render(request, 'fb/ig_on.html', {})
 
-
-        return HttpResponse(l)
-
-
+def ig_medias(request):
+    username = "jackie aina"
+    l = IGMANAGER.search_user(username=username)
+    return HttpResponse(l)
